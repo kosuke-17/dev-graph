@@ -1,5 +1,6 @@
 /node_modules
 
+components-deps.md
 deps.md
 
 .env*
