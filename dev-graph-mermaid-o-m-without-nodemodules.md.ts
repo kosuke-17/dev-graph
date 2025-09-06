@@ -27,6 +27,7 @@ function makeMermaid(nodes: string[], edges: Edge[]): string {
   return [header, ...nodeLines, ...edgeLines, "```"].join("\n");
 }
 
+// deps.md を出力
 async function main() {
   const project = fs.existsSync("tsconfig.json")
     ? new Project({ tsConfigFilePath: "tsconfig.json" })

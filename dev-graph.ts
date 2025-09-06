@@ -26,23 +26,6 @@ async function listFilesUsingTsMorph(
 ): Promise<string[]> {
   const project = new Project({ tsConfigFilePath: tsConfigFile });
   const sourceFiles = project.getSourceFiles();
-
-  // 以下のような形に出力
-  // /todo-agent/tools/database.ts
-  // -> fs
-  // -> path
-  // -> ./types.js
-  // for (const sf of sourceFiles) {
-  //   const imports = sf.getImportDeclarations();
-  //   if (imports.length > 0) {
-  //     console.log(`\n${sf.getFilePath()}`);
-  //     for (const imp of imports) {
-  //       const moduleSpecifier = imp.getModuleSpecifierValue();
-  //       console.log(`  -> ${moduleSpecifier}`);
-  //     }
-  //   }
-  // }
-
   return sourceFiles.map((sf) => sf.getFilePath());
 }
 
