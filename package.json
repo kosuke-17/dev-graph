@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "dev:graph": "npx tsx dev-graph.ts",
     "dev:graph:mermaid": "npx tsx dev-graph-mermaid.ts",
+    "dev:graph:mermaid:react": "npx tsx dev-graph.react.ts",
     "dev:graph:mermaid:output:md": "npx tsx dev-graph-mermaid-output-md.ts",
     "dev:graph:mermaid:o-m-without-nodemodules": "npx tsx dev-graph-mermaid-o-m-without-nodemodules.md.ts"
   },
@@ -13,7 +17,16 @@
   "description": "",
   "devDependencies": {
     "@types/node": "^24.3.1",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
     "ts-morph": "^26.0.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vite": "^7.1.4",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.8.2"
   }
 }
