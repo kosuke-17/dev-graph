@@ -9,6 +9,7 @@ const CWD = process.cwd();
 // 対象: components / pages / app の .tsx（必要なら .ts も追加可）
 const GLOBS = [
   "src/**/*.{ts,tsx}",
+  "app/**/*.{ts,tsx}",
   "!**/__tests__/**",
   "!**/*.test.*",
   "!**/*.spec.*",
@@ -19,10 +20,17 @@ const GLOBS = [
 const toPosix = (p: string) => p.replace(/\\/g, "/");
 const relFromCwd = (abs: string) => toPosix(path.relative(CWD, abs)) || ".";
 
-const isUnderTargets = (rel: string) =>
-  rel.startsWith("src/components/") ||
-  rel.startsWith("src/pages/") ||
-  rel.startsWith("src/app/");
+const isUnderTargets = (rel: string, isApp: boolean) => {
+  if (isApp) {
+    return rel.startsWith("app/");
+  }
+
+  return (
+    rel.startsWith("src/components/") ||
+    rel.startsWith("src/pages/") ||
+    rel.startsWith("src/app/")
+  );
+};
 
 function isInternal(absPath: string): boolean {
   const posix = toPosix(absPath);
@@ -69,7 +77,7 @@ async function main() {
     if (!isInternal(fromAbs)) continue;
 
     const fromRel = relFromCwd(fromAbs);
-    if (!isUnderTargets(fromRel)) continue; // ← これが重要
+    if (!isUnderTargets(fromRel, true)) continue; // ← これが重要
 
     const from = componentLabel(fromAbs);
     nodeSet.add(from);
@@ -84,7 +92,7 @@ async function main() {
       if (!isInternal(toAbs)) continue;
 
       const toRel = relFromCwd(toAbs);
-      if (!isUnderTargets(toRel)) continue; // ← 依存先も対象範囲に限定
+      if (!isUnderTargets(toRel, true)) continue; // ← 依存先も対象範囲に限定
 
       const to = componentLabel(toAbs);
       if (to === from) continue;
@@ -101,7 +109,7 @@ async function main() {
       if (!isInternal(toAbs)) continue;
 
       const toRel = relFromCwd(toAbs);
-      if (!isUnderTargets(toRel)) continue;
+      if (!isUnderTargets(toRel, true)) continue;
 
       const to = componentLabel(toAbs);
       if (to === from) continue;
